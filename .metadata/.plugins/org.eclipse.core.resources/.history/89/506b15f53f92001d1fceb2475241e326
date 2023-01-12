@@ -1,0 +1,5 @@
+package servletdemo.part03;
+
+public class MemberDTO {
+
+}

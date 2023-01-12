@@ -1,0 +1,10 @@
+package servletdemo.part03;
+
+public class MemberDTO {
+	private String fid;
+	private String fpass;
+	
+	public MemberDTO() {
+
+	}
+}
