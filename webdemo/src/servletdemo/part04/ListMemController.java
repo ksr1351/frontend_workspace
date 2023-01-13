@@ -1,6 +1,7 @@
-package servletdemo.part03;
+package servletdemo.part04;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,20 +10,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-// http://localhost:8090/webdemo/loginForm ->요청하는 주소
+//http://localhost:8090/webdemo/memlist
 
-//↓어노테이션
-@WebServlet("/loginForm")
-public class LoginFormController extends HttpServlet {
+@WebServlet("/memlist")
+public class ListMemController extends HttpServlet {
+	private MemService service;
+
+	public ListMemController() {
+		service = new MemService();
+	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String path = "/servletview/part03/loginForm.jsp"; //응답되는 주소
+		req.setAttribute("aList", service.getMemList());
 
+		String path = "/servletview/part04/list.jsp";
 		RequestDispatcher dis = req.getRequestDispatcher(path);
 		dis.forward(req, resp);
 	}
+
 }
-
-
-//주소를 통해서 =>get방식

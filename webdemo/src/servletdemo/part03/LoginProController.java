@@ -24,10 +24,12 @@ public class LoginProController extends HttpServlet{
 		dto.setFid(fid);
 		dto.setFpass(fpass);
 		
-		req.setAttribute("dto", dto);
+		req.setAttribute("dto", dto); //dto이름으로 dto를 저장(4 scope)
+		//setAttribute의 값을 /servletview/part03/loginResult.jsp에 사용함
 		
 		String path = "/servletview/part03/loginResult.jsp";
 		RequestDispatcher dis = req.getRequestDispatcher(path);
-		dis.forward(req, resp);
+		dis.forward(req, resp); 
+		//forward => 페이지 이동
 	}
 }
