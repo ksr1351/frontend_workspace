@@ -27,6 +27,10 @@ public class InsertMemController extends HttpServlet{
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		//post방식 한글깨짐 해결
+		req.setCharacterEncoding("UTF-8");
+		
 		String name = req.getParameter("name");
 		int age = Integer.parseInt(req.getParameter("age"));
 		String loc = req.getParameter("loc");
