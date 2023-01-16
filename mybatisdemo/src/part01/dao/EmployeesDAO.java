@@ -27,6 +27,6 @@ public class EmployeesDAO {
 	
 	public List<EmpDTO> getSearchListMethod(SqlSession sqlSession, String data){
 		return sqlSession.selectList("emp.searchList", data); 
-		// Mapper의 searchList를 참조, 같게 해줘야함 / data는 #{data}에서 받아서 처리
+		// empMapper의 searchList를 참조, 같게 해줘야함 / data는 #{data}에서 받아서 처리
 	}
 }

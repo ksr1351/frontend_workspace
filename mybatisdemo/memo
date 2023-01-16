@@ -1,2 +1,4 @@
 [oracle.properties]
 상수값은 properties 파일에 저장 가능
+
+오류메세지 중에 ORA는 모두 쿼리문에 이상이 있는 것, 쿼리문 확인

@@ -19,7 +19,7 @@
 		SELECT * FROM employees
 		WHERE first_name LIKE '%' || #{data} || '%' <!-- 파라미터값의 변수는 #{data}인데 data처럼 아무값이나 들어가도 됨 -->
 		ORDER BY employee_id
-		<!--  쿼리문에 변수가 들어간다면 mybatis에서는 ${  } 대신 #{ }을 사용함 -->
+		<!--  쿼리문에 변수가 들어간다면 mybatis에서는 ${  } 대신 #{  }을 사용함 -->
 	</select>
 	
 	
