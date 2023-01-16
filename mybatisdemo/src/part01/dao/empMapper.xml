@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="emp">
+	<!--  resultType 및 parameterType을 정할 때는 패키지를 다 써줘야 한다. -->
+	<select id="cnt" resultType="int"> <!-- alias 값 때문에 int로도 쓸 수 있음 -->
+		SELECT count(*) FROM employees <!-- 세미콜론 넣으면 안됨 -->
+
+	</select>
+	
+	<select id = "list" resultType="part01.dto.EmpDTO"> <!--직접 alias를 정한것 -->
+	SELECT * FROM employees
+	ORDER BY employee_id
+	</select>
+	
+	<select id = "searchList" parameterType = "string" resultType = "part01.dto.EmpDTO">
+		SELECT * FROM employees
+		WHERE first_name LIKE '%' || #{data} || '%' <!-- 파라미터값의 변수는 #{data}인데 data처럼 아무값이나 들어가도 됨 -->
+		ORDER BY employee_id
+		<!--  쿼리문에 변수가 들어간다면 mybatis에서는 ${  } 대신 #{ }을 사용함 -->
+	</select>
+	
+	
+	
+	
+	
+	
+</mapper>

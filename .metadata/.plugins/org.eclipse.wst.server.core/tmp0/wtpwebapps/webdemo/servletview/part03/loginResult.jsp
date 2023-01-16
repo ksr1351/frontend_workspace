@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>loginResult.jsp</title>
 </head>
 <body>
-<p> 아이디: ${dto.fid } </p>
-<p> 비밀번호: ${dto.fpass }</p> 
+<p> 아이디: ${requestScope.dto.fid } </p>
+<p> 비밀번호: ${requestScope.dto.fpass }</p> 
 </body>
 </html>
