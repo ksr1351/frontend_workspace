@@ -5,7 +5,7 @@
 <configuration>
 	<properties resource="common/config/oracle.properties" />
 	<!-- 확장자를 명시할 때, 패키지를 구분할 때는 슬래쉬(/)를 사용 
-	     확장자를 사용하지 않을 때는 점(.)으로 구분 -->
+	     확장자를 사용하지 않을 때는 점(.)으로 구분하고 확장자까지 모두 기입 -->
 	<environments default="development">
 		<environment id="development">
 			<transactionManager type="JDBC" />
@@ -19,5 +19,7 @@
 	</environments>
 	<mappers>
 		<mapper resource="part01/dao/empMapper.xml" />
+		<mapper resource="part02/config/memMapper.xml"/>
+		<mapper resource="part03/config/joinMapper.xml"/>
 	</mappers>
 </configuration>
