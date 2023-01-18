@@ -5,22 +5,60 @@
 <!-- mapper를 루트 요소로 사용 -->
 
 <mapper namespace="join">
-<!-- association : 1대1 관계의 JOIN명령을 처리하기 위해서 사용된다. -->
-<resultMap type="part03.dto.EmpDTO" id="emp_dept_result" autoMapping="false"> <!-- automapping은 기본값이 true -->
-	<result column="employee_id" property="employee_id"/> <!-- mapping이 false일 때는 column과 property가 같아도 선언해줘야함 -->
-	<result column="first_name" property="first_name"/>
-	<result column="job_id" property="job_id"/>
-	<association property="dept" javaType="part03.dto.DeptDTO">
-		<result column="department_id" property="department_id"/>
-		<result column="department_name" property="department_name"/>
-	</association>
-</resultMap>
+	<!-- association : 1대1 관계의 JOIN명령을 처리하기 위해서 사용된다. -->
+	<resultMap type="part03.dto.EmpDTO" id="emp_dept_result"
+		autoMapping="false"> <!-- automapping은 기본값이 true -->
+		<result column="employee_id" property="employee_id" /> <!-- mapping이 false일 때는 column과 property가 같아도 선언해줘야함 -->
+		<result column="first_name" property="first_name" />
+		<result column="job_id" property="job_id" />
+		<association property="dept" javaType="part03.dto.DeptDTO">
+			<result column="department_id" property="department_id" />
+			<result column="department_name" property="department_name" />
+		</association>
+	</resultMap>
 
 
-<!-- 테이블을 1개만 사용할 때는 resultType을 썼지만 join할 때는 resultMap을 따로 선언하고 쓰기 -->
+	<!-- 테이블을 1개만 사용할 때는 resultType을 썼지만 join할 때는 resultMap을 따로 선언하고 쓰기 -->
 	<select id="emp_dept" resultMap="emp_dept_result">
-		SELECT e.employee_id, e.first_name, e.job_id, d.department_id, d.department_name
-		FROM employees e, departments d
+		SELECT e.employee_id,
+		e.first_name, e.job_id, d.department_id, d.department_name
+		FROM
+		employees e, departments d
 		WHERE e.department_id = d.department_id
 	</select>
+
+
+	<!-- collection : 1:M(다수)관계의 JOIN명령을 처리하기 위해서 사용한다. -->
+	<resultMap type="part03.dto.DeptDTO" id="dept_emp_result">
+		<result column="department_id" property="department_id" />
+		<result column="department_name" property="department_name" />
+		<collection property="empList" javaType="java.util.List"
+			ofType="part03.dto.EmpDTO">
+			<result column="employee_id" property="employee_id" />
+			<result column="first_name" property="first_name" />
+			<result column="job_id" property="job_id" />
+		</collection>
+	</resultMap>
+	
+	<select id="dept_emp_list" resultMap="dept_emp_result">
+		SELECT d.department_id, d.department_name, e.employee_id, e.first_name, e.job_id
+		FROM departments d, employees e
+		WHERE d.department_id = e.department_id
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </mapper>

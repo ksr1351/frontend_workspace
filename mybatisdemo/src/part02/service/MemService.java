@@ -90,6 +90,105 @@ public class MemService {
 		}
 		return chk;
 
-	}//end setDeleteProcess()
+	}// end setDeleteProcess()
 
+	///////////////////////////////////////////////////////////////////
+
+	public int setInsertListProcess(List<MemDTO> memList) {
+		SqlSession sqlSession = null;
+		int chk = 0;
+
+		try {
+			sqlSession = factory.openSession(false);
+			for (int i = 0; i < memList.size(); i++) {
+				MemDTO memDTO = memList.get(i);
+				memDTO.setNum(dao.getKeyNumMethod(sqlSession));
+			}
+
+			chk = dao.setInsertListMethod(sqlSession, memList); // insert한 갯수를 받겠다
+			sqlSession.commit();
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			sqlSession.rollback();
+		} finally {
+			sqlSession.close();
+
+		}
+		return chk;
+	}// end setInsertListProcess()
+
+	public int setDeleteArrayProcess(int[] num) {
+		SqlSession sqlSession = null;
+		int chk = 0;
+
+		try {
+			sqlSession = factory.openSession(false);
+			chk = dao.setDeleteArrayMethod(sqlSession, num);
+			sqlSession.commit();
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			sqlSession.rollback();
+		} finally {
+			sqlSession.close();
+		}
+		return chk;
+
+	}// end setDeleteArrayProcess()
+
+	public List<MemDTO> getPartSearchProcess(MemDTO dto) {
+		SqlSession sqlSession = null;
+		List<MemDTO> aList = null;
+
+		try {
+			sqlSession = factory.openSession(false);
+			aList = dao.getPartSearchMethod(sqlSession, dto);
+			sqlSession.commit();
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			sqlSession.rollback();
+		} finally {
+			sqlSession.close();
+		}
+		return aList;
+	}// end getPartSearchProcess()
+
+	public int setUpdateMultiProcess(MemDTO dto) {
+		SqlSession sqlSession = null;
+		int chk = 0;
+
+		try {
+			sqlSession = factory.openSession(false);
+			chk = dao.setUpdateMultiMethod(sqlSession, dto);
+			sqlSession.commit();
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			sqlSession.rollback();
+		} finally {
+			sqlSession.close();
+		}
+		return chk;
+	}// end setUpdateMultiProcess()
+
+	
+	
+	
+	public int setInsertDataProcess(MemDTO dto) {
+		SqlSession sqlSession = null;
+		int chk = 0;
+
+		try {
+			sqlSession = factory.openSession(false);
+			chk = dao.setInsertDataMethod(sqlSession, dto);
+			sqlSession.commit();
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			sqlSession.rollback();
+		} finally {
+			sqlSession.close();
+		}
+		return chk;
+	}// end setInsertDataProcess()
+	
+	
+	
 }// end class

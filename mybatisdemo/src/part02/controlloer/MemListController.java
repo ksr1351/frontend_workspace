@@ -16,10 +16,10 @@ import part02.service.MemService;
 //http://localhost:8090/mybatisdemo/memList
 
 @WebServlet("/memList")
-public class MemController extends HttpServlet {
+public class MemListController extends HttpServlet {
 	private MemService service;
 
-	public MemController() {
+	public MemListController() {
 		service = new MemService();
 	}
 

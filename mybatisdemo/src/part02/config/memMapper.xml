@@ -7,7 +7,7 @@
 
 	<select id="list" resultType="part02.dto.MemDTO">
 		SELECT * FROM mem
-		ORDER BY num
+		ORDER BY num DESC
 	</select>
 
 	<insert id="memInsert" parameterType="part02.dto.MemDTO">
@@ -27,4 +27,119 @@
 		DELETE FROM mem
 		WHERE num=#{num} <!-- mem이라는 것에서 num을 삭제하라는 뜻 -->
 	</delete>
+
+
+	<!-- 다중 insert -->
+	<!-- INSERT ALL INTO mem(num, name, age, loc) VALUES(1, '홍길동', 30, '서울') 
+		INTO mem(num, name, age, loc) VALUES(2, '유대위', 29, '경기') SELECT * FROM dual; -->
+
+
+
+	<select id="keyNum" resultType="int" flushCache="true">
+		SELECT
+		mem_num_seq.nextval
+		FROM dual
+	</select>
+
+	<insert id="multiIns" parameterType="java.util.List">
+		INSERT ALL
+		<!-- 반복되는 것은 foreach를 사용해서 반복해주기 /collection에 넣을 수 있는 것은 array 또는 list밖에 
+			없음 -->
+		<!-- foreach 사용할 경우 parameterType 생략 가능 -->
+		<foreach collection="list" item="element" index="no">
+			INTO mem(num,
+			name, age, loc)
+			VALUES(#{element.num}, #{element.name},
+			#{element.age}, #{element.loc})
+		</foreach>
+		SELECT * FROM dual
+	</insert>
+
+	<!-- 다중 delete -->
+	<delete id="multiDel">
+		DELETE FROM mem
+		WHERE num IN(
+		<foreach collection="array" item="element" separator=",">
+			#{element}
+		</foreach>
+		)
+	</delete>
+
+
+	<!-- dynamic if -->
+	<select id="partSearch" parameterType="part02.dto.MemDTO"
+		resultType="part02.dto.MemDTO">
+		SELECT * FROM mem
+
+		<!-- <where> 
+			<if test="name!=null"> name LIKE '%' || #{name} || '%' 
+		</if> 
+			<if test="age!=0"> OR age > #{age} 
+		</if> 
+		</where> -->
+
+
+		<!-- suffixOverrides : 뒤에 or|and를 제거해주기 -->
+		<trim prefix="where" suffixOverrides="or|and">
+			<if test="name!=null">
+				name LIKE '%' || #{name} || '%' OR
+			</if>
+
+			<if test="age!=0">
+				age > #{age}
+			</if>
+
+		</trim>
+	</select>
+	
+	
+	<!-- 다중 update -->
+	<update id="multiUpt" parameterType="part02.dto.MemDTO">
+		UPDATE mem
+		<set>
+			<if test="name!=null">
+				name=#{name}, <!-- name이라는 컬럼에 #{name}의 값을 넣기 -->
+			</if>
+			
+			<if test="age!=0">
+				age=#{age},
+			</if>
+			
+			<if test="loc!=null">
+				loc=#{loc}
+			</if>
+		</set>
+		WHERE num=#{num}
+	</update>
+
+
+	<!-- choose 동적 SQL -->
+	<insert id="insData" parameterType="part02.dto.MemDTO">
+		INSERT INTO mem VALUES(mem_num_seq.nextval, #{name}, #{age}, 
+		<choose>
+			<when test="loc==null"> <!-- 조건을 만족할 때 수행할 문장 -->
+				'test'
+			</when>
+			<otherwise>
+				#{loc} <!-- 조건을 만족하지 않을 때 수행할 문장 -->
+			</otherwise>
+		</choose>
+		
+		)
+	</insert>
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

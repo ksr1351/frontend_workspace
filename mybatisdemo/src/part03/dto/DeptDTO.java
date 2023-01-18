@@ -1,11 +1,22 @@
 package part03.dto;
 
+import java.util.List;
+
 public class DeptDTO {
 	private int department_id;
 	private String department_name;
+	private List<EmpDTO> empList;
 
 	public DeptDTO() {
 
+	}
+	
+	public List<EmpDTO> getEmpList() {
+		return empList;
+	}
+	
+	public void setEmpList(List<EmpDTO> empList) {
+		this.empList = empList;
 	}
 
 	public int getDepartment_id() {
